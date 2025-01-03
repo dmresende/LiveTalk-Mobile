@@ -7,6 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DefaultInput from '@/components/forms/CustomImput';
 import DefaultButtonAction from '@/components/DefaultButtonAction';
+import DefaultLayout from '@/components/DefaultLayout';
+import { toast } from '@backpackapp-io/react-native-toast';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, "Login">;
 
@@ -29,25 +31,30 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp }) => {
 
   const onSubmit = (data: z.infer<typeof schema>) => {
     console.log(data);
+    toast.success("Login realizado com sucesso!");
+    navigation.navigate("ContactList");
   };
 
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
-      <Text className="text-3xl font-bold mb-8 text-blue-600">Login</Text>
-      <View className='w-4/5'>
-        <DefaultInput form={form} name="email" label='Email' />
-        <DefaultInput form={form} name="password" secureTextEntry label='Senha' />
-        <DefaultButtonAction title='Entrar' onpress={form.handleSubmit(onSubmit)} />
-        {/* Link para Cadastro */}
-        <TouchableOpacity
-          className="mt-4"
-          onPress={() => navigation.navigate("Register")}
-        >
-          <Text className="text-blue-600 underline">Não tem uma conta? Cadastre-se</Text>
-        </TouchableOpacity>
+    <DefaultLayout>
+      <View className="h-full justify-center items-center bg-gray-100">
+        <Text className="text-3xl font-bold mb-8 text-blue-600">Login</Text>
+        <View className='w-4/5'>
+          <DefaultInput form={form} name="email" label='Email' />
+          <DefaultInput form={form} name="password" secureTextEntry label='Senha' />
+          <DefaultButtonAction title='Entrar' onpress={form.handleSubmit(onSubmit)} />
+
+          {/* Link para Cadastro */}
+          <TouchableOpacity
+            className="mt-4"
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text className="text-blue-600 underline">Não tem uma conta? Cadastre-se</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </DefaultLayout>
   );
 };
 

@@ -7,6 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DefaultInput from '@/components/forms/CustomImput';
 import DefaultButtonAction from '@/components/DefaultButtonAction';
+import DefaultLayout from '@/components/DefaultLayout';
+import { toast } from '@backpackapp-io/react-native-toast';
 
 type NavigationProp = StackNavigationProp<RootStackParamList, "Register">;
 
@@ -38,27 +40,32 @@ const RegisterScreen = ({ navigation }: { navigation: NavigationProp }) => {
   });
 
   const onSubmit = (data: z.infer<typeof schema>) => {
+    toast.success("Cadastrado realizado com sucesso!");
     console.log(data);
+    navigation.navigate("Login");
   };
 
   return (
-    <View className="flex-1 justify-center items-center bg-gray-100">
-      <Text className="text-3xl font-bold mb-8 text-blue-600">Criar conta</Text>
-      <View className='w-4/5'>
-        <DefaultInput form={form} name="name" label='Nome' />
-        <DefaultInput form={form} name="email" label='Email' />
-        <DefaultInput form={form} name="password" secureTextEntry label='Senha' />
-        <DefaultInput form={form} name="confirmPassword" secureTextEntry label='Confirmar Senha' />
-        <DefaultButtonAction title='Salvar' onpress={form.handleSubmit(onSubmit)} />
-        {/* Link para Cadastro */}
-        <TouchableOpacity
-          className="mt-4"
-          onPress={() => console.log('Navegar para cadastro')}
-        >
-          <Text className="text-blue-600 underline">Já tem uma conta? Login</Text>
-        </TouchableOpacity>
+    <DefaultLayout>
+      <View className="h-full justify-center items-center bg-gray-100">
+        <Text className="text-3xl font-bold mb-8 text-blue-600">Criar conta</Text>
+        <View className='w-4/5'>
+          <DefaultInput form={form} name="name" label='Nome' />
+          <DefaultInput form={form} name="email" label='Email' />
+          <DefaultInput form={form} name="password" secureTextEntry label='Senha' />
+          <DefaultInput form={form} name="confirmPassword" secureTextEntry label='Confirmar Senha' />
+          <DefaultButtonAction title='Salvar' onpress={form.handleSubmit(onSubmit)} />
+
+          {/* Link para login */}
+          <TouchableOpacity
+            className="mt-4"
+            onPress={() => navigation.navigate("Login")}
+          >
+            <Text className="text-blue-600 underline">Já tem uma conta? Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </DefaultLayout>
   );
 };
 
