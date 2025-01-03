@@ -4,9 +4,11 @@ import { StatusBar } from 'expo-status-bar';
 import LoginScreen from '@/screens/LoginScreen';
 import ContactListScreen from '@/screens/ContactList';
 import ChatScreen from '@/screens/Chat';
+import RegisterScreen from '@/screens/RegisterScreen';
 
 export type RootStackParamList = {
   Login: undefined;
+  Register: undefined;
   ContactList: undefined;
   Chat: undefined
 };
@@ -21,6 +23,7 @@ export const RootNavigator = () => (
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="ContactList" component={ContactListScreen} />
       <Stack.Screen name="Chat" component={ChatScreen} options={{ headerShown: true }} />
     </Stack.Navigator>
